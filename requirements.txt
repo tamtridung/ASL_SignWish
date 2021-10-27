@@ -1,5 +1,5 @@
+python==3.9.7
 mediapipe==0.8.7.3
 opencv-python==4.5.3.56
 tensorflow==2.6.0
-python==3.9.7
 pyttsx3==2.90
