@@ -6,6 +6,8 @@ import time
 import mediapipe as mp
 import pyttsx3
 import tensorflow as tf
+import warnings
+warnings.filterwarnings('ignore')
 
 # MP Holistic:
 mp_holistic = mp.solutions.holistic # Holistic model
@@ -44,7 +46,7 @@ def extract_keypoints(results):
     return np.concatenate([pose, lh, rh])
 
 # Load model:
-model = tf.keras.models.load_model('./model_thirdrun.h5')
+model = tf.keras.models.load_model('./pretrained_models/model_11classes_v3.h5')
 
 model.compile(optimizer='adam',
               loss='categorical_crossentropy',
@@ -59,9 +61,9 @@ def prob_viz(res, actions, input_frame):
     prediction = sorted(pred_dict.items(), key=lambda x: x[1])[::-1][:5]
 
     for num, pred in enumerate(prediction):
-        text = '{}: {}'.format(pred[0], pred[1])
+        text = '{}: {}'.format(pred[0], round(float(pred[1]),4))
         # cv2.rectangle(output_frame, (0,60+num*40), (int(prob*100), 90+num*40), colors[num], -1)
-        cv2.putText(output_frame, text, (0, 85+num*40), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), 2, cv2.LINE_AA) 
+        cv2.putText(output_frame, text, (0, 85+num*40), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (255,255,255), 2, cv2.LINE_AA) 
     return output_frame
 
 # New detection variables
@@ -77,35 +79,35 @@ engine = pyttsx3.init()
 voices = engine.getProperty('voices')
 engine.setProperty('voice', voices[10].id)
 
-########################################################################################################
+###############################################################################################
                                             # STREAMLIT #
 
-col1, col2 = st.beta_columns((3,1))
+col1, col2 = st.columns((3,1))
 with col1:
     st.title('SIGN WISH')
     st.write('Make by TAM TRAN')
 
 with col2:
     st.image('./streamlit_files/asl-icon.png')
-    # st.title('Put image here!')
 
-# WEBCAM
+# Checkboxes
 st.header('Webcam')
 
-col11, col22, col33 = st.beta_columns(3)
-with col11:
-    show = st.checkbox('Show webcam')
-with col22:
+col1, col2, col3 = st.columns(3)
+with col1:
+    show_webcam = st.checkbox('Show webcam')
+with col2:
     show_landmarks = st.checkbox('Show landmarks')
-with col33:
+with col3:
     speak = st.checkbox('Speak')
 
+# Webcam
 FRAME_WINDOW = st.image([])
 cap = cv2.VideoCapture(0) # device 1/2
 
-# Set mediapipe model 
+# Mediapipe model 
 with mp_holistic.Holistic(min_detection_confidence=0.7, min_tracking_confidence=0.7) as holistic:
-    while show:
+    while show_webcam:
         # Read feed
         ret, frame = cap.read()
 
@@ -129,8 +131,12 @@ with mp_holistic.Holistic(min_detection_confidence=0.7, min_tracking_confidence=
             if res[np.argmax(res)] > threshold: 
                 if len(sentence) > 0: 
                     if actions[np.argmax(res)] != sentence[-1]:
-                        sentence.append(actions[np.argmax(res)])
-                        tts = True
+                        # incase the first word is iloveyou:
+                        if (sentence[0] == '') and (actions[np.argmax(res)] == 'i love you'):
+                            pass
+                        else:
+                            sentence.append(actions[np.argmax(res)])
+                            tts = True
                 else:
                     sentence.append(actions[np.argmax(res)])
                     tts = True
@@ -153,7 +159,7 @@ with mp_holistic.Holistic(min_detection_confidence=0.7, min_tracking_confidence=
             # show result
             cv2.rectangle(image, (0,0), (640, 40), (245, 117, 16), -1)
             cv2.putText(image, ' '.join(sentence), (3,30), 
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1, cv2.LINE_AA)
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2, cv2.LINE_AA)
         
         # Show to screen
         # cv2.imshow('OpenCV Feed', image)
