@@ -34,3 +34,33 @@ After collecting data, the next step is trainning moel. I did experiment some ty
 </p>
 
 With this manual build model, it achieved 92.05% of Top 1 accuracy. Not bad result!
+
+To easily compare the performance of my model with others, I have a comparison table below.
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/87942072/139209235-2d5d453f-8e43-4bb5-99ae-4e53cbee11c5.png" />
+</p>
+
+In this table is a comparison between my model and 2 models: VGG16-GRU and I3D, these two models I have obtained information from an article from australian national university and trained on dataset WLASL100 with 100 words in English.
+
+Here we see that the top 1 highest accuracy of the other 2 models is ~66%, and it is lower than my accuracy which is 92%. I know it's really unfair to have a comparison between 11 classes and 100 classes but with the top 1 accuracy ~92%, this shows us that this model really has potential to grow in the future.
+
+## Deploy with streamlit
+In order to using streamlit to use this application, you need to install streamlit first:
+- Install streamlit: `pip install streamlit`
+- Run streamlit: `streamlit run streamlit.py`
+- Result look like that:
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/87942072/139210018-8463ec00-f20b-4045-912f-efa4f94132f2.png" />
+</p>
+
+## Future works:
+In the future, if I have more time, I will:
+- Training model in 1000 English common words
+- Developing feature sign to sentence with NLP
+- Deploying mobile phone application
+
+
+
+
