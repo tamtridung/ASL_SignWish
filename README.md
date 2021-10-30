@@ -10,7 +10,8 @@ According to the World Health Organization (WHO), there are about 450 million pe
 
 However, sign language is not really popular in the community of ordinary people, this makes it difficult for the deaf-mute community to access public services and communicate with ordinary people as well as career development.
 
-Therefore, SignWish was born to make it easier for the deaf community to communicate and lead a better life.
+Therefore, SignWish was born to make it easier for the deaf community to communicate and lead a better life. For more information, you can refer on this google slide
+https://docs.google.com/presentation/d/1ryrYyALban0e49Ui_lBnF7KILHCUXxdROwcZk5K1c7I/edit?usp=sharing
 
 ## Requirements:
 - Python==3.9.7
