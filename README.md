@@ -1,5 +1,4 @@
 # ASL_SignWish 
-**Updating Readme is in progress**
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/87942072/138586745-50618668-598b-425b-9348-8d2819c86692.png" />
