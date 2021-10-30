@@ -13,6 +13,20 @@ However, sign language is not really popular in the community of ordinary people
 
 Therefore, SignWish was born to make it easier for the deaf community to communicate and lead a better life.
 
+## Requirements:
+- Python==3.9.7
+- mediapipe==0.8.7.3
+- opencv-python==4.5.3.56
+- tensorflow==2.6.0
+- pyttsx3==2.90
+
+## Files explaination:
+- `0_ASL.ipynb`: is template notebook (you no need to care about it)
+- `1_collecting_data.ipynb`: this notebook help you to collecting data (the processing was explained below)
+- `2_train_model.ipynb`: this notebook help us to train model on those data that we had collected
+- `3_testing.ipynb`: this notebook help us to test application with webcam
+- `4_streamlit.py`: this file for streamlit deploying
+
 ## Dataset and Feature Extraction
 
 Dataset to use in this project is manually trained by myself. For the first version, I collect 11 classes that are common words that we usually use with processing like the image below
